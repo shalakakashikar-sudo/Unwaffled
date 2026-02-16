@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ViewState } from '../types';
 
 type Expression = 'happy' | 'strict' | 'thinking' | 'surprised' | 'tickled' | 'starstruck' | 'wink' | 'bashful' | 'cool';
 
@@ -8,86 +9,146 @@ interface Comment {
   expression: Expression;
 }
 
-const COMMENTS: Comment[] = [
-  // --- Educational / Strict ---
-  { text: "Keep it crisp, don't waffle!", expression: 'strict' },
-  { text: "Rule #1: Every notice needs a BOX!", expression: 'strict' },
-  { text: "Brevity is key. 50 words max, or you're toast!", expression: 'strict' },
-  { text: "Who, What, When, Where, Whom, How. The 6 Ingredients!", expression: 'thinking' },
-  { text: "Date goes on the left. Don't make me messy!", expression: 'strict' },
-  { text: "Heading should be CAPITALS. Make it loud!", expression: 'surprised' },
-  { text: "Sign off with Name and Designation. No anonymity!", expression: 'strict' },
-  { text: "Is that a run-on sentence? Chop it up!", expression: 'strict' },
-  { text: "Use 'This is to inform...' not 'I want to say...'", expression: 'happy' },
-  { text: "Passive voice is preferred. Sound official!", expression: 'cool' },
-  { text: "Don't forget the issuing authority at the very top!", expression: 'strict' },
-  { text: "51 words? *Whistle blows* Off the plate!", expression: 'surprised' },
-  { text: "Underlining the subject is the syrup on top!", expression: 'starstruck' },
-  { text: "Format is the foundation. Don't let your waffle collapse!", expression: 'thinking' },
-  
-  // --- Study Guide Enhancements ---
-  { text: "1 Mark for Format, 2 for Content, 1 for Expression. Know the score!", expression: 'cool' },
-  { text: "No box? That's an automatic zero for format marks!", expression: 'strict' },
-  { text: "For FOUND notices, stay vague. Protect the goods!", expression: 'wink' },
-  { text: "For LOST notices, be descriptive. Mention every scratch!", expression: 'thinking' },
-  { text: "Appeals need heart. Balance emotion with info.", expression: 'bashful' },
-  { text: "Change notices need OLD vs NEW. Show the contrast!", expression: 'thinking' },
-  { text: "Use colons to save words. 'Date: 15th March' is better than a full sentence.", expression: 'cool' },
-  { text: "Don't say 'tomorrow'. The examiner doesn't know when tomorrow is!", expression: 'surprised' },
-  { text: "Active voice: 'Club organizes meeting' beats 'Meeting is organized by club'.", expression: 'starstruck' },
-  { text: "Remove 'I am very pleased and happy to inform you...' too soggy!", expression: 'strict' },
-  { text: "Attendance is mandatory? State it clearly!", expression: 'strict' },
-  { text: "Medical certificates for trips? Essential details matter!", expression: 'thinking' },
-  { text: "Contact number is a must for inter-school events.", expression: 'cool' },
-  { text: "In appeals, 'contribute generously' is better than 'please help'.", expression: 'starstruck' },
-  { text: "Keep your tone formal. No 'cool' or 'awesome' allowed!", expression: 'strict' },
-  { text: "Proofread for the 5 C's: Clear, Contrast, Cause, Commencement, Compliance.", expression: 'thinking' },
+interface MascotProps {
+  view: ViewState;
+  moduleId: string | null;
+}
 
-  // --- Waffle/Sweet Puns ---
-  { text: "I'm choc-full of good advice today!", expression: 'happy' },
-  { text: "That draft looks a bit soggy. Tighten it up!", expression: 'strict' },
-  { text: "Sweet! That's a perfectly formatted date.", expression: 'bashful' },
-  { text: "Don't sugarcoat the bad news, just be clear.", expression: 'thinking' },
-  { text: "I'm dripping with wisdom!", expression: 'cool' },
-  { text: "You're on a roll! (Like a cinnamon roll)", expression: 'wink' },
-  { text: "Sticky grammar situation? Let's fix it.", expression: 'thinking' },
-  { text: "My chocolate is melting... hurry up!", expression: 'surprised' },
-  { text: "Smooth as syrup. Nice sentence structure.", expression: 'starstruck' },
-  { text: "Hehehe! Stop poking my grid!", expression: 'tickled' },
-  { text: "You're making my chocolate swirl with joy!", expression: 'bashful' },
-];
+const COMMENTS: Record<string, Comment[]> = {
+  home: [
+    { text: "Welcome to the bakery! Ready to bake some crisp notices?", expression: 'happy' },
+    { text: "A notice is like a waffle: keep it square, keep it light, and don't let it get soggy with extra words!", expression: 'cool' },
+    { text: "Sir Crisp's Rule #1: If you waffle in a notice, you lose the crunch!", expression: 'strict' },
+    { text: "Teachers have a 50-word radar. Go to 51, and BEEP!", expression: 'surprised' },
+    { text: "Don't let your marks get soggy. Start a module!", expression: 'wink' },
+  ],
+  cheatsheet: [
+    { text: "The Bible of Brevity! Memorize these formulas or I'll soak your textbooks!", expression: 'strict' },
+    { text: "50 words or less—that's the golden rule here. Every extra word is a calorie I can't burn!", expression: 'thinking' },
+    { text: "Format marks are free marks—it's like getting free syrup with your waffle.", expression: 'starstruck' },
+    { text: "The Box is the border between success and absolute sogginess.", expression: 'strict' },
+    { text: "Remember: 'This is to inform...' is the standard dough for any notice recipe.", expression: 'happy' },
+  ],
+  practice: [
+    { text: "These questions are the real test! Time to get cooking, Chef.", expression: 'thinking' },
+    { text: "Need a hint? I've hidden some secret syrup-sweet tips in there.", expression: 'wink' },
+    { text: "Check your word count! Use your fingers, your toes, or a calculator if you have to. Just joking!", expression: 'strict' },
+    { text: "Consistency is key. A notice a day keeps the soggy marks away!", expression: 'cool' },
+    { text: "If you hit 51 words, imagine me turning into a soggy pancake. Don't do that to me!", expression: 'surprised' },
+  ],
+  module_foundation: [
+    { text: "Who, What, When, Where, Whom, Why. The 6 Holy Ingredients!", expression: 'thinking' },
+    { text: "1 Mark for Format. It's a gift—don't throw it in the trash bin!", expression: 'happy' },
+    { text: "Third person only! Writing 'I' or 'Me' is like putting pickles on a waffle. Disgusting!", expression: 'strict' },
+    { text: "Future tense is the only tense in Sir Crisp's kitchen. 'Will happen', not 'Has happened'.", expression: 'cool' },
+  ],
+  module_structure: [
+    { text: "Center that 'NOTICE' label! Let it breathe like a fresh waffle.", expression: 'surprised' },
+    { text: "Underlining the subject is the chocolate drizzle on top!", expression: 'starstruck' },
+    { text: "Date on the LEFT. Putting it on the right makes my grid itch!", expression: 'strict' },
+    { text: "A notice without a box is just a floating paragraph. Give it a home!", expression: 'happy' },
+  ],
+  module_diet: [
+    { text: "Chop those run-on sentences! Use a verbal cleaver. *Chop Chop*", expression: 'strict' },
+    { text: "Colons save words. 'Date: 12th Mar' is elite. 'The date is 12th Mar' is soggy.", expression: 'cool' },
+    { text: "Remove 'I am happy to inform you...'—it's too sweet and uses too many words!", expression: 'surprised' },
+    { text: "Adjectives are just empty calories. Cut them for a leaner, meaner notice.", expression: 'wink' },
+  ],
+  tickle: [
+    { text: "Hehehe! That tickles my butter-bits! Now go back to studying!", expression: 'tickled' },
+    { text: "Stop! You'll smudge my chocolate glaze! I'm a professional waffle!", expression: 'surprised' },
+    { text: "Waffle-checking is okay, but waffle-poking is a 5-mark deduction in my book!", expression: 'strict' },
+    { text: "Oh! You found my secret syrup stash! Don't tell the principal.", expression: 'starstruck' },
+    { text: "Stop it! I'm trying to look sophisticated for the board exams!", expression: 'bashful' },
+    { text: "Is that a scale in your pocket or are you just happy to draw a box?", expression: 'wink' },
+  ],
+  generic: [
+    { text: "Keep it crisp, don't waffle! Brevity is the soul of wit (and notices).", expression: 'strict' },
+    { text: "I'm dripping with wisdom and maple syrup!", expression: 'cool' },
+    { text: "Soggy waffle situation? Let's cook it well.", expression: 'thinking' },
+    { text: "Every time you use 'I', a waffle loses its crunch. Think of the poor waffles!", expression: 'strict' },
+    { text: "Pro tip: Draw the box AFTER writing. Don't let your text overflow like bad batter!", expression: 'thinking' },
+  ]
+};
 
-export const Mascot: React.FC = () => {
+export const Mascot: React.FC<MascotProps> = ({ view, moduleId }) => {
   const [currentComment, setCurrentComment] = useState<Comment>({
     text: "Ready to write? Don't waffle!",
     expression: 'happy'
   });
   const [isTickled, setIsTickled] = useState(false);
   const [showBubble, setShowBubble] = useState(true);
+  const [isDismissed, setIsDismissed] = useState(false);
+  const revertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const changeMood = useCallback((forceTickle = false) => {
-    const pool = forceTickle 
-      ? COMMENTS.filter(c => c.expression === 'tickled' || c.expression === 'happy' || c.expression === 'bashful')
-      : COMMENTS;
+  const getContextKey = useCallback(() => {
+    if (view === 'module' && moduleId) return `module_${moduleId}`;
+    return view;
+  }, [view, moduleId]);
+
+  const changeMood = useCallback((forceType?: 'tickle' | 'default') => {
+    let pool: Comment[];
+    
+    if (forceType === 'tickle') {
+      pool = COMMENTS.tickle;
+    } else {
+      const contextKey = getContextKey();
+      pool = COMMENTS[contextKey] || COMMENTS.generic;
+      // Occasionally mix in generic witty ones
+      if (Math.random() > 0.6) pool = [...pool, ...COMMENTS.generic];
+    }
+
     const randomComment = pool[Math.floor(Math.random() * pool.length)];
     setCurrentComment(randomComment);
     setShowBubble(true);
-  }, []);
+  }, [getContextKey]);
 
   const handleTickle = () => {
+    // If user pokes Sir Crisp, bring back the bubble even if dismissed
+    setIsDismissed(false);
+    
+    if (isTickled) return;
+    
     setIsTickled(true);
-    changeMood(true);
-    setTimeout(() => setIsTickled(false), 800);
+    changeMood('tickle');
+    
+    // Clear any existing revert timer
+    if (revertTimerRef.current) clearTimeout(revertTimerRef.current);
+    
+    // Stop the bounce animation after a short burst
+    setTimeout(() => setIsTickled(false), 1200);
+    
+    // Revert comment to context-appropriate one after 6 seconds as requested
+    revertTimerRef.current = setTimeout(() => {
+      changeMood('default');
+      revertTimerRef.current = null;
+    }, 6000);
+  };
+
+  const handleDismiss = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsDismissed(true);
   };
 
   useEffect(() => {
+    // Reset dismissal when page changes
+    setIsDismissed(false);
+    
+    // Change comment immediately when view changes
+    changeMood('default');
+    
     const timer = setInterval(() => {
-      if (!isTickled) {
-        changeMood();
+      // Only change automatically if we aren't currently showing a tickle response
+      if (!isTickled && !revertTimerRef.current) {
+        changeMood('default');
       }
-    }, 12000);
-    return () => clearInterval(timer);
-  }, [isTickled, changeMood]);
+    }, 18000); // Educational tips every 18 seconds while idle
+    
+    return () => {
+      clearInterval(timer);
+      if (revertTimerRef.current) clearTimeout(revertTimerRef.current);
+    };
+  }, [view, moduleId, changeMood]);
 
   const renderEyes = () => {
     switch (currentComment.expression) {
@@ -116,7 +177,7 @@ export const Mascot: React.FC = () => {
         return (
           <div className="flex gap-6 mb-1 items-end">
             <div className="w-7 h-7 bg-[#3E2723] rounded-full relative">
-              <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></div>
+              <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-white rounded-full"></div>
             </div>
             <div className="w-7 h-4 bg-[#3E2723] rounded-full relative"></div>
           </div>
@@ -199,8 +260,18 @@ export const Mascot: React.FC = () => {
     <div className="fixed bottom-14 right-10 z-50 flex flex-col items-end pointer-events-none font-sans">
       
       {/* Speech Bubble */}
-      {showBubble && (
+      {showBubble && !isDismissed && (
         <div className="mb-6 mr-6 bg-white border-2 border-[#5D4037] p-5 rounded-[2.5rem] rounded-br-none shadow-2xl max-w-[240px] text-sm font-bold text-[#3E2723] relative animate-in fade-in zoom-in slide-in-from-bottom-4 pointer-events-auto transition-all">
+          
+          {/* Close Sign */}
+          <button 
+            onClick={handleDismiss}
+            className="absolute -top-2 -right-2 w-7 h-7 bg-[#5D4037] text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors border-2 border-white shadow-md z-10"
+            title="Dismiss until next page"
+          >
+            <span className="text-[10px] font-black leading-none uppercase">✕</span>
+          </button>
+
           <p className="leading-tight">{currentComment.text}</p>
           <div className="absolute -bottom-2 right-6 w-5 h-5 bg-white border-r-2 border-b-2 border-[#5D4037] transform rotate-45"></div>
         </div>
@@ -209,13 +280,13 @@ export const Mascot: React.FC = () => {
       {/* Mascot Container */}
       <div 
         onClick={handleTickle}
-        className={`w-36 h-36 relative cursor-pointer pointer-events-auto transition-all duration-300 hover:scale-110 active:scale-90 group ${isTickled ? 'animate-bounce' : ''}`}
+        className={`w-36 h-36 relative cursor-pointer pointer-events-auto transition-all duration-300 hover:scale-110 active:scale-90 group ${isTickled ? 'animate-bounce scale-105' : ''}`}
         title="Sir Crisp: Click to tickle!"
       >
         
         {/* Expression Particles */}
         <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-           {(currentComment.expression === 'happy' || currentComment.expression === 'bashful') && (
+           {(currentComment.expression === 'happy' || currentComment.expression === 'bashful' || currentComment.expression === 'tickled') && (
              <>
                <div className="absolute -top-6 left-4 text-red-500 animate-pulse text-xl">❤️</div>
                <div className="absolute top-2 -right-4 text-pink-500 animate-bounce text-lg">❤️</div>
@@ -235,7 +306,7 @@ export const Mascot: React.FC = () => {
         {/* Shadow for grounding */}
         <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-24 h-5 bg-black/10 blur-lg rounded-full"></div>
 
-        {/* === LIMBS (Integrated Cinnamon Sticks) === */}
+        {/* === LIMBS === */}
         <div className={`absolute top-[45%] -left-5 w-12 h-4 bg-gradient-to-r from-[#5D4037] to-[#8D6E63] rounded-full border border-[#3E2723] z-0 shadow-sm transition-transform duration-300 ${isTickled ? 'rotate-[40deg]' : '-rotate-12'}`}></div>
         <div className={`absolute top-[45%] -right-5 w-12 h-4 bg-gradient-to-l from-[#5D4037] to-[#8D6E63] rounded-full border border-[#3E2723] z-0 shadow-sm transition-transform duration-300 ${isTickled ? '-rotate-[40deg]' : 'rotate-12'}`}></div>
         

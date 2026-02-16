@@ -13,15 +13,10 @@ const App: React.FC = () => {
     MODULES.find(m => m.id === activeModuleId), 
   [activeModuleId]);
 
-  const navigateToModule = (id: string) => {
-    setActiveModuleId(id);
-    setView('module');
+  const navigateToView = (newView: ViewState, moduleId: string | null = null) => {
+    setView(newView);
+    setActiveModuleId(moduleId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const goHome = () => {
-    setView('home');
-    setActiveModuleId(null);
   };
 
   const currentIndex = MODULES.findIndex(m => m.id === activeModuleId);
@@ -32,7 +27,7 @@ const App: React.FC = () => {
       <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-orange-100 shadow-sm px-4 md:px-8 py-4 flex items-center justify-between">
         <div 
           className="flex items-center gap-3 cursor-pointer group"
-          onClick={goHome}
+          onClick={() => navigateToView('home')}
         >
           <div className="w-10 h-10 bg-orange-400 rounded-xl border-2 border-orange-600 flex flex-wrap p-1 group-hover:rotate-12 transition-all shadow-[0_4px_0_rgba(0,0,0,0.1)]">
             <div className="w-[40%] h-[40%] m-[5%] bg-orange-500 rounded-sm"></div>
@@ -45,19 +40,19 @@ const App: React.FC = () => {
         
         <nav className="flex items-center gap-4 md:gap-8">
           <button 
-            onClick={goHome}
+            onClick={() => navigateToView('home')}
             className={`text-sm font-bold tracking-widest uppercase transition-all pb-1 ${view === 'home' || view === 'module' ? 'text-orange-600 border-b-4 border-orange-400' : 'text-gray-500 hover:text-orange-400'}`}
           >
             Learn
           </button>
           <button 
-            onClick={() => setView('cheatsheet')}
+            onClick={() => navigateToView('cheatsheet')}
             className={`text-sm font-bold tracking-widest uppercase transition-all pb-1 ${view === 'cheatsheet' ? 'text-orange-600 border-b-4 border-orange-400' : 'text-gray-500 hover:text-orange-400'}`}
           >
             Cheat Sheet
           </button>
           <button 
-            onClick={() => { setView('practice'); window.scrollTo({top: 0}); }}
+            onClick={() => navigateToView('practice')}
             className={`text-sm font-bold tracking-widest uppercase transition-all pb-1 ${view === 'practice' ? 'text-orange-600 border-b-4 border-orange-400' : 'text-gray-500 hover:text-orange-400'}`}
           >
             Practice Zone
@@ -79,13 +74,13 @@ const App: React.FC = () => {
               </p>
               <div className="flex justify-center gap-6 mt-12">
                 <button 
-                  onClick={() => navigateToModule('foundation')}
+                  onClick={() => navigateToView('module', 'foundation')}
                   className="px-8 py-4 bg-orange-500 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-orange-600 shadow-xl transition-all hover:-translate-y-1"
                 >
                   Start Course
                 </button>
                 <button 
-                  onClick={() => setView('cheatsheet')}
+                  onClick={() => navigateToView('cheatsheet')}
                   className="px-8 py-4 bg-white border-4 border-orange-500 text-orange-600 rounded-2xl font-black uppercase tracking-widest hover:bg-orange-50 transition-all hover:-translate-y-1"
                 >
                   Open Cheat Sheet
@@ -97,7 +92,7 @@ const App: React.FC = () => {
               {MODULES.map((module) => (
                 <div 
                   key={module.id}
-                  onClick={() => navigateToModule(module.id)}
+                  onClick={() => navigateToView('module', module.id)}
                   className="group relative bg-white/40 backdrop-blur-xl p-10 rounded-[3.5rem] border-2 border-white shadow-[0_30px_60px_-15px_rgba(255,165,0,0.15)] hover:shadow-[0_45px_90px_-20px_rgba(255,165,0,0.25)] hover:bg-white/70 hover:-translate-y-3 transition-all duration-500 cursor-pointer flex flex-col overflow-hidden"
                 >
                   <div className="absolute -top-6 -right-6 p-6 opacity-[0.04] group-hover:opacity-[0.1] transition-opacity duration-700">
@@ -119,7 +114,7 @@ const App: React.FC = () => {
         {view === 'module' && activeModule && (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-12 duration-700">
             <button 
-              onClick={goHome}
+              onClick={() => navigateToView('home')}
               className="group flex items-center text-sm font-black text-orange-600 hover:text-orange-900 transition-colors uppercase tracking-[0.3em]"
             >
               <svg className="w-5 h-5 mr-2 group-hover:-translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path></svg>
@@ -141,14 +136,14 @@ const App: React.FC = () => {
               <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                 {currentIndex > 0 && (
                   <button 
-                    onClick={() => navigateToModule(MODULES[currentIndex - 1].id)}
+                    onClick={() => navigateToView('module', MODULES[currentIndex - 1].id)}
                     className="px-12 py-6 rounded-3xl font-black text-gray-500 bg-gray-100 hover:bg-gray-200 hover:text-gray-950 transition-all uppercase tracking-widest text-sm"
                   >
                     Previous Topic
                   </button>
                 )}
                 <button 
-                   onClick={goHome}
+                   onClick={() => navigateToView('home')}
                    className="px-12 py-6 rounded-3xl font-black text-gray-500 hover:bg-gray-200 hover:text-gray-950 transition-all uppercase tracking-widest text-sm bg-gray-100"
                 >
                   Back to Home
@@ -158,9 +153,9 @@ const App: React.FC = () => {
                 onClick={() => {
                   const nextModule = MODULES[currentIndex + 1];
                   if (nextModule) {
-                    navigateToModule(nextModule.id);
+                    navigateToView('module', nextModule.id);
                   } else {
-                    setView('cheatsheet');
+                    navigateToView('cheatsheet');
                   }
                 }}
                 className="w-full md:w-auto px-20 py-7 bg-orange-500 hover:bg-orange-600 text-white rounded-[3rem] font-black shadow-3xl shadow-orange-300 transition-all hover:-translate-y-2 active:scale-95 uppercase tracking-[0.2em] text-xl"
@@ -290,7 +285,7 @@ const App: React.FC = () => {
 
             <div className="text-center">
               <button 
-                onClick={() => setView('practice')}
+                onClick={() => navigateToView('practice')}
                 className="px-20 py-7 bg-orange-500 hover:bg-orange-600 text-white rounded-[3rem] font-black shadow-3xl shadow-orange-300 transition-all hover:-translate-y-2 active:scale-95 uppercase tracking-[0.2em] text-2xl"
               >
                 Enter Practice Zone
@@ -310,7 +305,7 @@ const App: React.FC = () => {
       </footer>
 
       {/* The Mascot */}
-      <Mascot />
+      <Mascot view={view} moduleId={activeModuleId} />
     </div>
   );
 };
