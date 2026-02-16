@@ -47,29 +47,23 @@ export const NoticePreview: React.FC<NoticePreviewProps> = ({ data, showLines = 
               <div className="absolute -bottom-1 left-0 right-0 h-1 bg-black"></div>
             </div>
           </RuledLine>
-
-          {/* Line 4: Empty Spacer */}
-          <RuledLine />
           
-          {/* Line 5: Date */}
+          {/* Line 4: Date - The spacer previously between NOTICE and Date is now removed */}
           <RuledLine className="pl-16">
             <span className="font-bold text-sm">Date: {data.date}</span>
           </RuledLine>
 
-          {/* Line 6: Empty Spacer */}
-          <RuledLine />
-
-          {/* Line 7: Subject */}
+          {/* Line 5: Subject - The spacer previously between Date and Subject is now removed */}
           <RuledLine className="justify-center px-12">
             <h4 className="font-black uppercase border-b-2 border-black leading-none pb-1">
               {data.subject}
             </h4>
           </RuledLine>
 
-          {/* Line 8: Empty Spacer */}
+          {/* Line 6: Empty Spacer remains before body */}
           <RuledLine />
 
-          {/* Lines 9+: Body */}
+          {/* Lines 7+: Body */}
           <div className="w-full px-16 text-justify">
             <p className="font-bold text-gray-800 text-xl leading-[40px] whitespace-pre-wrap">
               {data.body}

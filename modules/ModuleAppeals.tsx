@@ -11,86 +11,59 @@ export const ModuleAppeals: React.FC = () => (
       </p>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div className="bg-white p-10 rounded-[3rem] border-2 border-red-100 shadow-xl group hover:scale-[1.02] transition-transform">
-        <span className="inline-block text-xs font-black text-red-400 uppercase tracking-widest bg-red-50 px-4 py-1 rounded-full mb-4">❌ Too Manipulative</span>
-        <p className="text-lg italic font-medium text-gray-500">"Please help these poor suffering souls who are dying of hunger in the cold with absolutely no food..."</p>
-      </div>
-      <div className="bg-green-50 p-10 rounded-[3rem] border-2 border-green-100 shadow-xl group hover:scale-[1.02] transition-transform">
-        <span className="inline-block text-xs font-black text-green-500 uppercase tracking-widest bg-green-100 px-4 py-1 rounded-full mb-4">✅ Balanced & Dignified</span>
-        <p className="text-lg font-bold text-green-900">"We appeal to your humanitarian spirit to contribute towards helping cyclone victims rebuild their lives and communities."</p>
-      </div>
-    </div>
-
     <div className="space-y-24">
+      {/* Example 1 */}
       <div className="space-y-6">
-        <h4 className="text-2xl font-black text-orange-950 uppercase flex items-center gap-3">
-          <span className="bg-orange-100 p-2 rounded-xl">🌪️</span> Natural Disaster Relief
-        </h4>
+        <div className="bg-red-50 p-4 rounded-2xl border border-red-100 italic font-medium text-gray-600">
+          <span className="font-black text-red-900 not-italic uppercase text-xs mr-2">Problem Statement:</span>
+          Appeal for donations for a visit to a local Old Age Home.
+        </div>
         <NoticePreview 
           data={{
-            orgName: "VIJAY PUBLIC SCHOOL, VIJAY NAGAR",
-            date: "8th December, 20XX",
-            subject: "APPEAL FOR HURRICANE RELIEF",
-            body: "The Student Council organizes a rehabilitation drive for hurricane victims. Please donate clothes, books, and blankets to support families who lost their homes in this tragic natural disaster recently.\n\nKindly submit your contributions by 15th December. For details, contact the undersigned. Certificates given to contributors.",
+            orgName: "MODERN PUBLIC SCHOOL, DELHI",
+            date: "08th December, 20XX",
+            subject: "APPEAL: VISIT TO OLD AGE HOME",
+            body: "The Student Council is organizing a visit to 'Nirmal Chhaya', a local old age home, on 20th December. We appeal to all students to contribute items like blankets and medicines.\n\nYour small gesture can bring immense joy to the senior citizens. Please deposit your contributions at the Council Room by 15th December. Thank you.",
             name: "Akanksha",
             designation: "Head Girl"
           }}
         />
       </div>
 
+      {/* Example 2 */}
       <div className="space-y-6">
-        <h4 className="text-2xl font-black text-orange-950 uppercase flex items-center gap-3">
-          <span className="bg-orange-100 p-2 rounded-xl">🐾</span> Animal Shelter Support
-        </h4>
+        <div className="bg-red-50 p-4 rounded-2xl border border-red-100 italic font-medium text-gray-600">
+          <span className="font-black text-red-900 not-italic uppercase text-xs mr-2">Problem Statement:</span>
+          Appeal for funds for a Cancer Awareness drive and patient support.
+        </div>
         <NoticePreview 
           data={{
-            orgName: "RIVERSIDE SCHOOL, PUNE",
+            orgName: "RIVERSIDE HIGH, PUNE",
             date: "10th April, 20XX",
-            subject: "APPEAL: ANIMAL SHELTER DONATIONS",
-            body: "The Nature Club is collecting donations for the City Animal Shelter. We request you to donate blankets, food, and medicines for abandoned animals to help them live better lives.\n\nShow compassion for voiceless beings. Kindly donate by 20th April. Contact the undersigned for further information.",
+            subject: "APPEAL FOR CANCER PATIENT SUPPORT",
+            body: "Our school is raising funds to support underprivileged cancer patients undergoing treatment at the City Hospital. We appeal for your generous contributions towards this humanitarian cause.\n\nDonations in cash or cheques may be submitted to the class teacher by 25th April. Every rupee counts in this noble fight for life.",
             name: "Priya Sharma",
-            designation: "Captain, Nature Club"
-          }}
-        />
-      </div>
-
-      <div className="space-y-6">
-        <h4 className="text-2xl font-black text-orange-950 uppercase flex items-center gap-3">
-          <span className="bg-orange-100 p-2 rounded-xl">🤝</span> Voluntary Service (Time)
-        </h4>
-        <NoticePreview 
-          data={{
-            orgName: "MODERN HIGH SCHOOL, BANGALORE",
-            date: "5th July, 20XX",
-            subject: "VOLUNTEERS FOR TEACHING DRIVE",
-            body: "The Social Service Club appeals for student volunteers to teach at the local orphanage on weekends. We need dedicated individuals to spend two hours every Saturday.\n\nHelp make a difference in a child's education. Register with the undersigned by 10th July. Certificates provided.",
-            name: "Karan Mehta",
             designation: "Secretary, Social Service Club"
           }}
         />
       </div>
-    </div>
 
-    <div className="bg-orange-950 text-white p-12 rounded-[4rem] space-y-8">
-      <h4 className="text-2xl font-black text-orange-400 uppercase tracking-widest text-center">Sir Crisp's Motivational Phrase Bank:</h4>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-lg font-bold opacity-80 italic">
-        <div className="flex items-start gap-4">
-          <div className="mt-1 w-2 h-2 bg-orange-500 rounded-full shrink-0"></div>
-          "Every small contribution counts toward a bigger change."
+      {/* Example 3 */}
+      <div className="space-y-6">
+        <div className="bg-red-50 p-4 rounded-2xl border border-red-100 italic font-medium text-gray-600">
+          <span className="font-black text-red-900 not-italic uppercase text-xs mr-2">Problem Statement:</span>
+          As Secretary of the Social Service League, appeal for old textbooks for a slum library.
         </div>
-        <div className="flex items-start gap-4">
-          <div className="mt-1 w-2 h-2 bg-orange-500 rounded-full shrink-0"></div>
-          "Join hands in this noble cause to rebuild lives."
-        </div>
-        <div className="flex items-start gap-4">
-          <div className="mt-1 w-2 h-2 bg-orange-500 rounded-full shrink-0"></div>
-          "Your support can help bring a smile back to those in need."
-        </div>
-        <div className="flex items-start gap-4">
-          <div className="mt-1 w-2 h-2 bg-orange-500 rounded-full shrink-0"></div>
-          "We appeal to your humanitarian spirit for this drive."
-        </div>
+        <NoticePreview 
+          data={{
+            orgName: "SUNRISE ACADEMY, CHANDIGARH",
+            date: "05th July, 20XX",
+            subject: "DONATE BOOKS: SLUM LIBRARY PROJECT",
+            body: "The Social Service League is establishing a library for children in the nearby slum area. We appeal to students to donate their old, well-maintained textbooks and storybooks.\n\nLet's spread the light of education. Please drop off the books in the designated boxes near the gate by 15th July.",
+            name: "Karan Mehta",
+            designation: "Secretary, Social Service League"
+          }}
+        />
       </div>
     </div>
   </div>
