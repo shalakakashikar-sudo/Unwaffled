@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unwaffled | Master Notice Writing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Shadows+Into+Light&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-bg: #FFF9F2;
+            --line-height: 40px; /* Rigid 40px for perfect alignment */
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--brand-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(35,92%,90%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(20,90%,95%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(40,95%,92%,1) 0, transparent 50%);
+            background-attachment: fixed;
+            color: #1a1a1a;
+        }
+        .handwriting {
+            font-family: 'Shadows Into Light', cursive;
+        }
+        .mono {
+            font-family: 'Space Mono', monospace;
+        }
+        .ruled-paper {
+            background-image: linear-gradient(#e5e7eb 1.5px, transparent 1.5px);
+            background-size: 100% var(--line-height);
+            /* This ensures the first line starts exactly 40px from the top of the container */
+            background-position: 0 calc(var(--line-height) - 1px);
+        }
+        /* Glassmorphism utility scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E6A045;
+            border-radius: 10px;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
