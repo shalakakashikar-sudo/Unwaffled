@@ -171,75 +171,75 @@ const App: React.FC = () => {
         )}
 
         {view === 'cheatsheet' && (
-          <div className="space-y-20 animate-in fade-in slide-in-from-bottom-12 duration-700">
-            <header className="text-center space-y-6">
-              <h2 className="text-7xl md:text-9xl font-black text-orange-950 tracking-tighter uppercase">THE CRISP BIBLE</h2>
-              <p className="text-2xl text-orange-800 font-black uppercase tracking-[0.3em] opacity-90">Secret Recipe for Notice Success</p>
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-12 duration-700">
+            <header className="text-center space-y-4">
+              <h2 className="text-6xl md:text-7xl font-black text-orange-950 tracking-tighter uppercase">THE CRISP BIBLE</h2>
+              <p className="text-xl text-orange-800 font-black uppercase tracking-[0.2em] opacity-80">Secret Recipe for Notice Success</p>
             </header>
 
-            <div className="bg-white/80 backdrop-blur-3xl rounded-[5rem] p-12 md:p-20 shadow-3xl border-4 border-white space-y-24">
+            <div className="bg-white/80 backdrop-blur-3xl rounded-[3rem] p-8 md:p-12 shadow-2xl border-2 border-white space-y-16">
               
-              {/* Section 1: The 10-Second Checklist */}
-              <div className="space-y-12">
-                <div className="flex items-center gap-6">
-                  <span className="text-5xl">✅</span>
-                  <h4 className="text-4xl font-black text-orange-950 uppercase tracking-tight">The 10-Second Checklist</h4>
+              {/* Section 1: The 10-Second Checklist - Streamlined */}
+              <div className="space-y-8">
+                <div className="flex items-center gap-4 border-b-2 border-orange-100 pb-2">
+                  <span className="text-3xl">✅</span>
+                  <h4 className="text-2xl font-black text-orange-950 uppercase tracking-tight">The 10-Second Checklist</h4>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {[
-                    { t: 'The Box', d: 'Drawn with a scale and pencil. Mandatory.' },
-                    { t: 'The Header', d: 'Org Name in ALL CAPS at the center.' },
-                    { t: 'Label "NOTICE"', d: 'Centered, bold, and capitalized.' },
-                    { t: 'The Date', d: 'Left-aligned. Format: 15th March, 20XX.' },
-                    { t: 'The Subject', d: 'Punchy, centered, and UNDERLINED.' },
-                    { t: 'The Sign-off', d: 'Name & Designation at the bottom left.' }
+                    { t: 'The Box', d: 'Pencil + Scale. Mandatory.' },
+                    { t: 'The Header', d: 'Org Name, Centered, ALL CAPS.' },
+                    { t: 'Label "NOTICE"', d: 'Centered & Bold Caps.' },
+                    { t: 'The Date', d: 'Left, Format: 15th March, 20XX.' },
+                    { t: 'The Subject', d: 'Centered & UNDERLINED.' },
+                    { t: 'The Sign-off', d: 'Name & (Designation).' }
                   ].map(item => (
-                    <div key={item.t} className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-orange-100 flex flex-col hover:scale-105 transition-transform cursor-default group">
-                      <span className="text-orange-500 font-black text-xs uppercase tracking-widest mb-2 group-hover:translate-x-2 transition-transform">Point</span>
-                      <h5 className="text-xl font-black text-gray-900 mb-2">{item.t}</h5>
-                      <p className="text-sm font-bold text-gray-500 italic leading-relaxed">{item.d}</p>
+                    <div key={item.t} className="bg-white p-5 rounded-3xl shadow-sm border border-orange-50 flex items-start gap-4 hover:border-orange-200 transition-all cursor-default group">
+                      <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black shrink-0 text-xs">!</div>
+                      <div>
+                        <h5 className="text-base font-black text-gray-900">{item.t}</h5>
+                        <p className="text-sm font-bold text-gray-500 italic">{item.d}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Section 2: Universal Templates */}
-              <div className="space-y-12">
-                <div className="flex items-center gap-6">
-                  <span className="text-5xl">📋</span>
-                  <h4 className="text-4xl font-black text-orange-950 uppercase tracking-tight">Universal Formulas</h4>
+              {/* Section 2: Universal Templates - Less Bulky */}
+              <div className="space-y-8">
+                <div className="flex items-center gap-4 border-b-2 border-orange-100 pb-2">
+                  <span className="text-3xl">📋</span>
+                  <h4 className="text-2xl font-black text-orange-950 uppercase tracking-tight">Universal Formulas</h4>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                  <div className="bg-indigo-950 p-10 rounded-[4rem] text-white space-y-8 shadow-2xl">
-                    <h5 className="text-2xl font-black text-indigo-300 uppercase">Standard Formula</h5>
-                    <div className="p-6 bg-white/5 rounded-3xl font-mono text-sm leading-relaxed border border-white/10 italic">
-                      "This is to inform [Audience] that [Event] is scheduled for [Date] at [Time] in [Venue]. [Prerequisite/Details]. For further info, contact undersigned."
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="bg-indigo-50 p-8 rounded-[2.5rem] space-y-4 border border-indigo-100">
+                    <div className="flex items-center justify-between">
+                      <h5 className="text-lg font-black text-indigo-900 uppercase">General Formula</h5>
+                      <span className="bg-indigo-200 text-indigo-700 text-[10px] px-2 py-0.5 rounded-full font-black uppercase">Events/Meetings</span>
                     </div>
-                    <ul className="space-y-4 text-sm font-bold opacity-80">
-                      <li>• Best for: Meetings, Events, Competitions.</li>
-                      <li>• Key: Stick to 3rd Person.</li>
-                    </ul>
+                    <div className="p-5 bg-white/60 rounded-2xl font-mono text-sm leading-relaxed text-indigo-950 border border-indigo-200">
+                      "This is to inform <span className="text-indigo-600">[Audience]</span> that <span className="text-indigo-600">[Event]</span> is scheduled for <span className="text-indigo-600">[Date]</span> at <span className="text-indigo-600">[Time]</span> in <span className="text-indigo-600">[Venue]</span>. Interested students may register by <span className="text-indigo-600">[Deadline]</span>."
+                    </div>
                   </div>
-                  <div className="bg-emerald-900 p-10 rounded-[4rem] text-white space-y-8 shadow-2xl">
-                    <h5 className="text-2xl font-black text-emerald-300 uppercase">Lost & Found Formula</h5>
-                    <div className="p-6 bg-white/5 rounded-3xl font-mono text-sm leading-relaxed border border-white/10 italic">
-                      "A [Item] was [Lost/Found] on [Date] at [Venue]. It is [Description]. [Owner/Finder] is requested to contact the undersigned [Action]."
+                  <div className="bg-emerald-50 p-8 rounded-[2.5rem] space-y-4 border border-emerald-100">
+                    <div className="flex items-center justify-between">
+                      <h5 className="text-lg font-black text-emerald-900 uppercase">Lost & Found</h5>
+                      <span className="bg-emerald-200 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-black uppercase">Property</span>
                     </div>
-                    <ul className="space-y-4 text-sm font-bold opacity-80">
-                      <li>• Lost: Use 1st Person ("I lost my...").</li>
-                      <li>• Found: Keep details vague ("Owner must describe...").</li>
-                    </ul>
+                    <div className="p-5 bg-white/60 rounded-2xl font-mono text-sm leading-relaxed text-emerald-950 border border-emerald-200">
+                      "A <span className="text-emerald-600">[Item]</span> was <span className="text-emerald-600">[Lost/Found]</span> on <span className="text-emerald-600">[Date]</span> at <span className="text-emerald-600">[Venue]</span>. It is <span className="text-emerald-600">[Description]</span>. Rightful owner must contact undersigned to claim it."
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Section 3: Professional Vocab Upgrade */}
-              <div className="bg-orange-50 p-16 rounded-[4rem] border-2 border-orange-100 space-y-12">
+              {/* Section 3: Vocab Upgrade - Tightened Grid */}
+              <div className="bg-orange-50/50 p-8 rounded-[3rem] border border-orange-100 space-y-8">
                 <div className="text-center">
-                  <h4 className="text-4xl font-black text-orange-950 uppercase tracking-tight">Vocab Power-Ups</h4>
-                  <p className="text-orange-700 font-bold opacity-70 mt-2 italic">Replace soggy words with crisp verbs.</p>
+                  <h4 className="text-2xl font-black text-orange-950 uppercase tracking-tight">Vocab Power-Ups</h4>
+                  <p className="text-orange-700 text-sm font-bold opacity-70 italic">Replace soggy words with crisp verbs.</p>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
                     { b: 'Come to', g: 'Attend' },
                     { b: 'Call', g: 'Convene' },
@@ -250,33 +250,33 @@ const App: React.FC = () => {
                     { b: 'Give', g: 'Contribute' },
                     { b: 'Fix', g: 'Finalize' }
                   ].map(word => (
-                    <div key={word.b} className="bg-white p-6 rounded-3xl text-center shadow-sm border border-orange-100 flex flex-col group hover:bg-orange-600 transition-colors">
-                      <span className="text-[10px] font-black text-red-300 line-through group-hover:text-white/40">{word.b}</span>
-                      <span className="text-xl font-black text-green-700 group-hover:text-white uppercase tracking-tighter">➔ {word.g}</span>
+                    <div key={word.b} className="bg-white p-5 rounded-2xl text-center shadow-sm border border-orange-100 group hover:bg-orange-600 transition-all">
+                      <span className="text-xs font-black text-red-300 line-through group-hover:text-white/40 block leading-none mb-1">{word.b}</span>
+                      <span className="text-base font-black text-green-700 group-hover:text-white uppercase">➔ {word.g}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Section 4: The 50-Word Wall */}
-              <div className="bg-red-600 p-16 rounded-[4.5rem] shadow-[0_40px_100px_rgba(220,38,38,0.3)] text-white transform hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
-                  <div className="text-[10rem] animate-pulse drop-shadow-2xl">🚨</div>
-                  <div className="text-center md:text-left space-y-4">
-                    <h4 className="text-5xl font-black uppercase tracking-[0.15em]">50 WORD LIMIT</h4>
-                    <p className="text-3xl font-bold leading-none opacity-95">Every extra word is a deduction. Edit ruthlessly. Sir Crisp hates soggy writing!</p>
+              {/* Section 4: The 50-Word Wall - High Legibility */}
+              <div className="bg-red-600 p-10 rounded-[2.5rem] shadow-xl text-white overflow-hidden relative group">
+                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="flex items-center gap-8 relative z-10">
+                  <div className="text-6xl drop-shadow-lg">🚨</div>
+                  <div className="space-y-2">
+                    <h4 className="text-3xl font-black uppercase tracking-wider">50 WORD LIMIT</h4>
+                    <p className="text-lg font-bold leading-tight text-red-50">Every extra word is a deduction. Edit ruthlessly. Sir Crisp hates soggy writing!</p>
                   </div>
                 </div>
               </div>
 
-              {/* Final Pro Tip Footer */}
-              <div className="bg-orange-950 p-12 rounded-[5rem] flex flex-col md:flex-row items-center gap-10">
-                <div className="text-7xl">🥨</div>
+              {/* Footer Tip - Exam Hack: Visual Punch - FIXED FONT SIZE */}
+              <div className="bg-orange-950 p-10 rounded-[3rem] flex items-center gap-8 border-2 border-orange-900/50 shadow-inner">
+                <div className="text-6xl shrink-0 group-hover:rotate-12 transition-transform">🥨</div>
                 <div className="space-y-2">
-                  <h4 className="text-2xl font-black uppercase text-orange-400">Final Exam Hack: "The Visual Punch"</h4>
-                  <p className="text-lg font-bold text-orange-100 opacity-80 italic">
-                    "If your notice looks clean from 5 feet away, you've already won 50% of the battle. Use a sharp pencil for the box and a bold pen for the header. Stay crisp!"
+                  <h4 className="text-xl font-black uppercase text-orange-400 tracking-tight">Exam Hack: Visual Punch</h4>
+                  <p className="text-lg font-bold text-orange-100 italic leading-snug">
+                    "If your notice looks clean from 5 feet away, you've already won half the battle. Use a sharp pencil and bold pen. Stay crisp!"
                   </p>
                 </div>
               </div>
@@ -286,9 +286,9 @@ const App: React.FC = () => {
             <div className="text-center">
               <button 
                 onClick={() => navigateToView('practice')}
-                className="px-20 py-7 bg-orange-500 hover:bg-orange-600 text-white rounded-[3rem] font-black shadow-3xl shadow-orange-300 transition-all hover:-translate-y-2 active:scale-95 uppercase tracking-[0.2em] text-2xl"
+                className="px-12 py-5 bg-orange-500 hover:bg-orange-600 text-white rounded-[2rem] font-black shadow-2xl shadow-orange-300 transition-all hover:-translate-y-1 active:scale-95 uppercase tracking-[0.2em] text-lg"
               >
-                Enter Practice Zone
+                Practice Zone
               </button>
             </div>
           </div>
