@@ -3,6 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { Mascot } from './components/Mascot';
 import { ViewState, Module } from './types';
 import { MODULES } from './constants';
+import { ModulePractice } from './modules/ModulePractice';
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
@@ -39,13 +40,13 @@ const App: React.FC = () => {
             <div className="w-[40%] h-[40%] m-[5%] bg-orange-500 rounded-sm"></div>
             <div className="w-[40%] h-[40%] m-[5%] bg-orange-500 rounded-sm"></div>
           </div>
-          <h1 className="text-2xl font-black text-orange-950 tracking-tighter">UNWAFFLED</h1>
+          <h1 className="text-2xl font-black text-orange-950 tracking-tighter uppercase">UNWAFFLED</h1>
         </div>
         
         <nav className="flex items-center gap-4 md:gap-8">
           <button 
             onClick={goHome}
-            className={`text-sm font-bold tracking-widest uppercase transition-all pb-1 ${view === 'home' ? 'text-orange-600 border-b-4 border-orange-400' : 'text-gray-500 hover:text-orange-400'}`}
+            className={`text-sm font-bold tracking-widest uppercase transition-all pb-1 ${view === 'home' || view === 'module' ? 'text-orange-600 border-b-4 border-orange-400' : 'text-gray-500 hover:text-orange-400'}`}
           >
             Learn
           </button>
@@ -55,6 +56,12 @@ const App: React.FC = () => {
           >
             Cheat Sheet
           </button>
+          <button 
+            onClick={() => { setView('practice'); window.scrollTo({top: 0}); }}
+            className={`text-sm font-bold tracking-widest uppercase transition-all pb-1 ${view === 'practice' ? 'text-orange-600 border-b-4 border-orange-400' : 'text-gray-500 hover:text-orange-400'}`}
+          >
+            Practice Zone
+          </button>
         </nav>
       </header>
 
@@ -62,10 +69,7 @@ const App: React.FC = () => {
       <main className="flex-grow max-w-6xl mx-auto w-full px-6 py-12 md:py-20">
         {view === 'home' && (
           <div className="space-y-24">
-            <header className="text-center space-y-8">
-              <div className="inline-flex items-center gap-2 px-6 py-2 bg-orange-100 text-orange-700 text-xs font-black rounded-full uppercase tracking-[0.3em] shadow-sm animate-bounce">
-                📢 THE MASTERCLASS FOR NOTICE WRITING
-              </div>
+            <header className="text-center space-y-10 pt-10">
               <h2 className="text-6xl md:text-8xl font-black text-orange-950 leading-[0.85] tracking-tighter">
                 Serve it hot.<br/><span className="text-orange-500 underline decoration-orange-200 underline-offset-[16px] decoration-8">Keep it short.</span>
               </h2>
@@ -73,9 +77,19 @@ const App: React.FC = () => {
                 The ultimate guide to Notice Writing. <br/>
                 "The only place where Waffling is strictly forbidden."
               </p>
-              <div className="flex justify-center gap-3">
-                <div className="h-2.5 w-32 bg-orange-400 rounded-full shadow-sm"></div>
-                <div className="h-2.5 w-6 bg-orange-200 rounded-full"></div>
+              <div className="flex justify-center gap-6 mt-12">
+                <button 
+                  onClick={() => navigateToModule('foundation')}
+                  className="px-8 py-4 bg-orange-500 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-orange-600 shadow-xl transition-all hover:-translate-y-1"
+                >
+                  Start Course
+                </button>
+                <button 
+                  onClick={() => setView('cheatsheet')}
+                  className="px-8 py-4 bg-white border-4 border-orange-500 text-orange-600 rounded-2xl font-black uppercase tracking-widest hover:bg-orange-50 transition-all hover:-translate-y-1"
+                >
+                  Open Cheat Sheet
+                </button>
               </div>
             </header>
 
@@ -151,52 +165,106 @@ const App: React.FC = () => {
                 }}
                 className="w-full md:w-auto px-20 py-7 bg-orange-500 hover:bg-orange-600 text-white rounded-[3rem] font-black shadow-3xl shadow-orange-300 transition-all hover:-translate-y-2 active:scale-95 uppercase tracking-[0.2em] text-xl"
               >
-                {currentIndex === MODULES.length - 1 ? 'Go to Bible' : 'Keep it Crisp'}
+                {currentIndex === MODULES.length - 1 ? 'Go to Cheat Sheet' : 'Keep it Crisp'}
               </button>
             </div>
           </div>
         )}
 
+        {view === 'practice' && (
+          <ModulePractice />
+        )}
+
         {view === 'cheatsheet' && (
           <div className="space-y-20 animate-in fade-in slide-in-from-bottom-12 duration-700">
             <header className="text-center space-y-6">
-              <h2 className="text-7xl md:text-9xl font-black text-orange-950 tracking-tighter">THE CRISP BIBLE</h2>
+              <h2 className="text-7xl md:text-9xl font-black text-orange-950 tracking-tighter uppercase">THE CRISP BIBLE</h2>
               <p className="text-2xl text-orange-800 font-black uppercase tracking-[0.3em] opacity-90">Secret Recipe for Notice Success</p>
             </header>
 
-            <div className="bg-white/80 backdrop-blur-3xl rounded-[5rem] p-12 md:p-28 shadow-3xl border-4 border-white space-y-20">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-                <div className="space-y-12">
-                  <h4 className="text-4xl font-black text-orange-950 border-b-8 border-orange-100 pb-6 tracking-tight uppercase">Essentials</h4>
-                  <ul className="space-y-8">
-                    {['The BOX (Use Pencil & Scale!)', 'Org Name (Centered Top)', 'NOTICE (In Bold Capitals)', 'Date (12th March, 20XX)', 'Subject (Punchy & Underlined)', 'Name & Post (Bottom Left)'].map(item => (
-                      <li key={item} className="flex items-start gap-6 text-2xl font-black text-gray-900 group">
-                        <div className="mt-1 w-10 h-10 bg-orange-500 text-white rounded-[1rem] flex items-center justify-center shadow-xl group-hover:scale-125 transition-transform duration-300">✓</div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+            <div className="bg-white/80 backdrop-blur-3xl rounded-[5rem] p-12 md:p-20 shadow-3xl border-4 border-white space-y-24">
+              
+              {/* Section 1: The 10-Second Checklist */}
+              <div className="space-y-12">
+                <div className="flex items-center gap-6">
+                  <span className="text-5xl">✅</span>
+                  <h4 className="text-4xl font-black text-orange-950 uppercase tracking-tight">The 10-Second Checklist</h4>
                 </div>
-                <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-12 rounded-[4rem] border-2 border-orange-200/40 shadow-inner">
-                  <h4 className="text-4xl font-black text-orange-950 mb-10 tracking-tight uppercase">Smart Editing</h4>
-                  <div className="space-y-8">
-                    <div className="bg-white/95 p-8 rounded-[2.5rem] shadow-md border border-orange-100 transition-all hover:scale-105">
-                      <p className="text-xs text-gray-400 font-black line-through italic mb-2 uppercase tracking-widest">I would like to inform everyone that...</p>
-                      <p className="text-2xl font-black text-green-600">This is to inform all...</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[
+                    { t: 'The Box', d: 'Drawn with a scale and pencil. Mandatory.' },
+                    { t: 'The Header', d: 'Org Name in ALL CAPS at the center.' },
+                    { t: 'Label "NOTICE"', d: 'Centered, bold, and capitalized.' },
+                    { t: 'The Date', d: 'Left-aligned. Format: 15th March, 20XX.' },
+                    { t: 'The Subject', d: 'Punchy, centered, and UNDERLINED.' },
+                    { t: 'The Sign-off', d: 'Name & Designation at the bottom left.' }
+                  ].map(item => (
+                    <div key={item.t} className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-orange-100 flex flex-col hover:scale-105 transition-transform cursor-default group">
+                      <span className="text-orange-500 font-black text-xs uppercase tracking-widest mb-2 group-hover:translate-x-2 transition-transform">Point</span>
+                      <h5 className="text-xl font-black text-gray-900 mb-2">{item.t}</h5>
+                      <p className="text-sm font-bold text-gray-500 italic leading-relaxed">{item.d}</p>
                     </div>
-                    <div className="bg-white/95 p-8 rounded-[2.5rem] shadow-md border border-orange-100 transition-all hover:scale-105">
-                      <p className="text-xs text-gray-400 font-black line-through italic mb-2 uppercase tracking-widest">Students who want to participate</p>
-                      <p className="text-2xl font-black text-green-600">Interested students</p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 2: Universal Templates */}
+              <div className="space-y-12">
+                <div className="flex items-center gap-6">
+                  <span className="text-5xl">📋</span>
+                  <h4 className="text-4xl font-black text-orange-950 uppercase tracking-tight">Universal Formulas</h4>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                  <div className="bg-indigo-950 p-10 rounded-[4rem] text-white space-y-8 shadow-2xl">
+                    <h5 className="text-2xl font-black text-indigo-300 uppercase">Standard Formula</h5>
+                    <div className="p-6 bg-white/5 rounded-3xl font-mono text-sm leading-relaxed border border-white/10 italic">
+                      "This is to inform [Audience] that [Event] is scheduled for [Date] at [Time] in [Venue]. [Prerequisite/Details]. For further info, contact undersigned."
                     </div>
-                    <div className="bg-white/95 p-8 rounded-[2.5rem] shadow-md border border-orange-100 transition-all hover:scale-105">
-                      <p className="text-xs text-gray-400 font-black line-through italic mb-2 uppercase tracking-widest">At the venue of the auditorium</p>
-                      <p className="text-2xl font-black text-green-600">In the auditorium</p>
+                    <ul className="space-y-4 text-sm font-bold opacity-80">
+                      <li>• Best for: Meetings, Events, Competitions.</li>
+                      <li>• Key: Stick to 3rd Person.</li>
+                    </ul>
+                  </div>
+                  <div className="bg-emerald-900 p-10 rounded-[4rem] text-white space-y-8 shadow-2xl">
+                    <h5 className="text-2xl font-black text-emerald-300 uppercase">Lost & Found Formula</h5>
+                    <div className="p-6 bg-white/5 rounded-3xl font-mono text-sm leading-relaxed border border-white/10 italic">
+                      "A [Item] was [Lost/Found] on [Date] at [Venue]. It is [Description]. [Owner/Finder] is requested to contact the undersigned [Action]."
                     </div>
+                    <ul className="space-y-4 text-sm font-bold opacity-80">
+                      <li>• Lost: Use 1st Person ("I lost my...").</li>
+                      <li>• Found: Keep details vague ("Owner must describe...").</li>
+                    </ul>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-red-600 p-16 rounded-[4.5rem] shadow-[0_40px_100px_rgba(220,38,38,0.3)] text-white transform hover:scale-[1.03] transition-transform duration-500 relative overflow-hidden group">
+              {/* Section 3: Professional Vocab Upgrade */}
+              <div className="bg-orange-50 p-16 rounded-[4rem] border-2 border-orange-100 space-y-12">
+                <div className="text-center">
+                  <h4 className="text-4xl font-black text-orange-950 uppercase tracking-tight">Vocab Power-Ups</h4>
+                  <p className="text-orange-700 font-bold opacity-70 mt-2 italic">Replace soggy words with crisp verbs.</p>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  {[
+                    { b: 'Come to', g: 'Attend' },
+                    { b: 'Call', g: 'Convene' },
+                    { b: 'Tell about', g: 'Notify' },
+                    { b: 'Join in', g: 'Participate' },
+                    { b: 'Carry out', g: 'Implement' },
+                    { b: 'Ask for', g: 'Appeal' },
+                    { b: 'Give', g: 'Contribute' },
+                    { b: 'Fix', g: 'Finalize' }
+                  ].map(word => (
+                    <div key={word.b} className="bg-white p-6 rounded-3xl text-center shadow-sm border border-orange-100 flex flex-col group hover:bg-orange-600 transition-colors">
+                      <span className="text-[10px] font-black text-red-300 line-through group-hover:text-white/40">{word.b}</span>
+                      <span className="text-xl font-black text-green-700 group-hover:text-white uppercase tracking-tighter">➔ {word.g}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 4: The 50-Word Wall */}
+              <div className="bg-red-600 p-16 rounded-[4.5rem] shadow-[0_40px_100px_rgba(220,38,38,0.3)] text-white transform hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
                   <div className="text-[10rem] animate-pulse drop-shadow-2xl">🚨</div>
@@ -206,6 +274,27 @@ const App: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Final Pro Tip Footer */}
+              <div className="bg-orange-950 p-12 rounded-[5rem] flex flex-col md:flex-row items-center gap-10">
+                <div className="text-7xl">🥨</div>
+                <div className="space-y-2">
+                  <h4 className="text-2xl font-black uppercase text-orange-400">Final Exam Hack: "The Visual Punch"</h4>
+                  <p className="text-lg font-bold text-orange-100 opacity-80 italic">
+                    "If your notice looks clean from 5 feet away, you've already won 50% of the battle. Use a sharp pencil for the box and a bold pen for the header. Stay crisp!"
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="text-center">
+              <button 
+                onClick={() => setView('practice')}
+                className="px-20 py-7 bg-orange-500 hover:bg-orange-600 text-white rounded-[3rem] font-black shadow-3xl shadow-orange-300 transition-all hover:-translate-y-2 active:scale-95 uppercase tracking-[0.2em] text-2xl"
+              >
+                Enter Practice Zone
+              </button>
             </div>
           </div>
         )}

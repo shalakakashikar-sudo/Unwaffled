@@ -1,3 +1,4 @@
+
 // Added React import to resolve the "Cannot find namespace 'React'" error for React.ReactNode
 import React from 'react';
 
@@ -9,7 +10,7 @@ export interface Module {
   content: React.ReactNode;
 }
 
-export type ViewState = 'home' | 'module' | 'cheatsheet';
+export type ViewState = 'home' | 'module' | 'cheatsheet' | 'practice';
 
 export interface NoticeData {
   orgName: string;
